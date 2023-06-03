@@ -3,13 +3,34 @@ package main
 import (
 	"fmt"
 	"log"
+	"net/http"
 	"os"
 	"strconv"
+
+	controllers "github.com/haminhtoan123/gohotel/controllers"
+	repo "github.com/haminhtoan123/gohotel/repo"
+	swaggerfiles "github.com/swaggo/files"
+	ginSwagger "github.com/swaggo/gin-swagger"
 
 	"github.com/gin-gonic/gin"
 	"github.com/gocql/gocql"
 	"github.com/joho/godotenv"
 )
+
+// @BasePath /api/v1
+
+// PingExample godoc
+// @Summary ping example
+// @Schemes
+// @Description do ping
+// @Tags example
+// @Accept json
+// @Produce json
+// @Success 200 {string} Helloworld
+// @Router /example/helloworld [get]
+func Helloworld(g *gin.Context) {
+	g.JSON(http.StatusOK, "helloworld")
+}
 
 func main() {
 	err := godotenv.Load()
@@ -32,14 +53,26 @@ func main() {
 	if err != nil {
 		log.Fatal(err)
 	}
-	defer session.Close()
-	controller := controller.NewHotelController(repo)
+	fmt.Println("Connected to Cassandra!")
+
+	cassandra := repo.NewCassandraHotelRepository(session)
+	controller := controllers.NewHotelController(cassandra)
 
 	router := gin.Default()
+	docs.SwaggerInfo.BasePath = "/api/v1"
+	v1 := router.Group("/api/v1")
+	{
+	   eg := v1.Group("/example")
+	   {
+		  eg.GET("/helloworld",Helloworld)
+	   }
+	}
+	router.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerfiles.Handler))
+
 	router.POST("/hotels", controller.AddHotel)
 	router.PUT("/hotels/:name", controller.UpdateHotel)
 	router.GET("/hotels/:name", controller.GetHotel)
 
 	router.Run()
-	fmt.Println("Connected to Cassandra!")
+	defer session.Close()
 }

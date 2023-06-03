@@ -1,6 +1,6 @@
 package repo
 
-import model "github.com/haminhtoan123/gohotel/models/models"
+import model "github.com/haminhtoan123/gohotel/models"
 
 type HotelRepository interface {
 	Add(hotel *model.Hotel) error

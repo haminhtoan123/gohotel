@@ -1,8 +1,7 @@
 package repo
 
 import (
-	model "github.com/haminhtoan123/gohotel/models/models"
-	"github.com/haminhtoan123/gohotel/repo/repo"
+	model "github.com/haminhtoan123/gohotel/models"
 
 	"github.com/gocql/gocql"
 )
@@ -11,7 +10,7 @@ type CassandraHotelRepository struct {
 	session *gocql.Session
 }
 
-func NewCassandraHotelRepository(session *gocql.Session) *repo.HotelRepository {
+func NewCassandraHotelRepository(session *gocql.Session) HotelRepository {
 	return &CassandraHotelRepository{session: session}
 }
 
