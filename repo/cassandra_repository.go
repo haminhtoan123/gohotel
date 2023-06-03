@@ -1,8 +1,8 @@
 package repo
 
 import (
-	"github.com/haminhtoan123/gohotel/models/model"
-	"github.com/haminhtoan123/gohotel/models/repo"
+	model "github.com/haminhtoan123/gohotel/models/models"
+	"github.com/haminhtoan123/gohotel/repo/repo"
 
 	"github.com/gocql/gocql"
 )

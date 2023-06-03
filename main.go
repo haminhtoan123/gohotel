@@ -6,8 +6,6 @@ import (
 	"os"
 	"strconv"
 
-	"github.com/haminhtoan123/gohotel/controller"
-
 	"github.com/gin-gonic/gin"
 	"github.com/gocql/gocql"
 	"github.com/joho/godotenv"

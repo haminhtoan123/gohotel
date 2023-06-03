@@ -1,9 +1,9 @@
-package controller
+package controllers
 
 import (
 	"net/http"
 
-	"github.com/haminhtoan123/gohotel/models/model"
+	"github.com/haminhtoan123/gohotel/models/models"
 	"github.com/haminhtoan123/gohotel/repo/repo"
 
 	"github.com/gin-gonic/gin"
@@ -18,7 +18,7 @@ func NewHotelController(repo repo.HotelRepository) *HotelController {
 }
 
 func (c *HotelController) AddHotel(ctx *gin.Context) {
-	var hotel model.Hotel
+	var hotel models.Hotel
 	if err := ctx.ShouldBindJSON(&hotel); err != nil {
 		ctx.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
@@ -35,7 +35,7 @@ func (c *HotelController) AddHotel(ctx *gin.Context) {
 func (c *HotelController) UpdateHotel(ctx *gin.Context) {
 	name := ctx.Param("name")
 
-	var hotel model.Hotel
+	var hotel models.Hotel
 	if err := ctx.ShouldBindJSON(&hotel); err != nil {
 		ctx.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return

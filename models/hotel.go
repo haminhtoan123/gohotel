@@ -1,4 +1,4 @@
-package model
+package models
 
 type Hotel struct {
 	Name      string
